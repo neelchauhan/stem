@@ -50,7 +50,7 @@ def random_fingerprint():
   return hashlib.sha1(os.urandom(20)).hexdigest().upper()
 
 
-class TestController(unittest.TestCase):
+class TestBasicSignals(unittest.TestCase):
   @only_run_once
   @require_controller
   def test_missing_capabilities(self):
@@ -269,6 +269,8 @@ class TestController(unittest.TestCase):
         event_notice.wait(4)
         self.assertTrue(len(event_buffer) >= 1)
 
+
+class TestControllerCommands(unittest.TestCase):
   @require_controller
   def test_getinfo(self):
     """
@@ -607,6 +609,8 @@ class TestController(unittest.TestCase):
           except:
             pass
 
+
+class TestHiddenServices(unittest.TestCase):
   @require_controller
   @require_version(Requirement.ADD_ONION)
   def test_without_ephemeral_hidden_services(self):
@@ -745,6 +749,8 @@ class TestController(unittest.TestCase):
       self.assertEqual([response.service_id], controller.list_ephemeral_hidden_services(detached = True))
       controller.remove_ephemeral_hidden_service(response.service_id)
 
+
+class TestConfigCommands(unittest.TestCase):
   @require_controller
   def test_set_conf(self):
     """
@@ -876,6 +882,8 @@ class TestController(unittest.TestCase):
         controller.save_conf()
         controller.reset_conf('__OwningControllerProcess')
 
+
+class TestConnection(unittest.TestCase):
   @require_controller
   def test_get_ports(self):
     """
@@ -1108,6 +1116,8 @@ class TestController(unittest.TestCase):
 
       self.assertRaises(stem.InvalidArguments, controller.close_stream, 'blarg')
 
+
+class TestDescriptor(unittest.TestCase):
   @require_controller
   @require_online
   def test_mapaddress(self):
@@ -1326,6 +1336,8 @@ class TestController(unittest.TestCase):
       self.assertEqual('pop goes the weasel', controller.get_hidden_service_descriptor('m4cfuk6qp4lpu2g5', 'pop goes the weasel'))
       self.assertEqual(None, controller.get_hidden_service_descriptor('m4cfuk6qp4lpu2g5', await_result = False))
 
+
+class TestConnection(unittest.TestCase):
   @require_controller
   @require_online
   @require_version(Requirement.EXTENDCIRCUIT_PATH_OPTIONAL)
